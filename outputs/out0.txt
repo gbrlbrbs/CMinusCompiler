@@ -1,0 +1,60 @@
+
+C- COMPILATION: sample0.cminus
+
+Syntax tree:
+  Function Declaration: type = int, name = gdc
+    Param Declaration: type = int, name = u
+    Param Declaration: type = int, name = v
+    Compound Statement:
+      If
+        Op: ==
+          Id: v
+          Const: 0
+        Return:
+          Id: u
+        Return:
+          Call: gdc
+            Id: v
+            Op: -
+              Id: u
+              Op: *
+                Op: /
+                  Id: u
+                  Id: v
+                Id: v
+  Function Declaration: type = void, name = main
+    Param Declaration: type = void, name = (null)
+    Compound Statement:
+      Var Declaration: type = int, name = x
+      Var Declaration: type = int, name = y
+      Assign: 
+        Id: x
+        Call: input
+      Assign: 
+        Id: y
+        Call: input
+      Call: output
+        Call: gdc
+          Id: x
+          Id: y
+
+Building Symbol Table...
+
+Symbol table:
+
+<global scope> (nested level: 0)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+gdc            Function  main           Function  input          Function  output         Function  
+function name: gdc (nested level: 1)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+u              Parameter   v              Parameter   
+function name: main (nested level: 1)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+x              Variable  y              Variable  
+
+Checking Types...
+
+Type Checking Finished

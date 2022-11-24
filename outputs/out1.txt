@@ -1,0 +1,181 @@
+
+C- COMPILATION: sample1.cminus
+
+Syntax tree:
+  Var Declaration: type = int[], name = x
+    Const: 10
+  Function Declaration: type = int, name = minloc
+    Param Declaration: type = int[], name = a
+      Const: 0
+    Param Declaration: type = int, name = low
+    Param Declaration: type = int, name = high
+    Compound Statement:
+      Var Declaration: type = int, name = i
+      Var Declaration: type = int, name = x
+      Var Declaration: type = int, name = k
+      Assign: 
+        Id: k
+        Id: low
+      Assign: 
+        Id: x
+        Array Id: a
+          Id: low
+      Assign: 
+        Id: i
+        Op: +
+          Id: low
+          Const: 1
+      While
+        Op: <
+          Id: i
+          Id: high
+        Compound Statement:
+          If
+            Op: <
+              Array Id: a
+                Id: i
+              Id: x
+            Compound Statement:
+              Assign: 
+                Id: x
+                Array Id: a
+                  Id: i
+              Assign: 
+                Id: k
+                Id: i
+          Assign: 
+            Id: i
+            Op: +
+              Id: i
+              Const: 1
+      Return:
+        Id: k
+  Function Declaration: type = void, name = sort
+    Param Declaration: type = int[], name = a
+      Const: 0
+    Param Declaration: type = int, name = low
+    Param Declaration: type = int, name = high
+    Compound Statement:
+      Var Declaration: type = int, name = i
+      Var Declaration: type = int, name = k
+      Assign: 
+        Id: i
+        Id: low
+      While
+        Op: <
+          Id: i
+          Op: -
+            Id: high
+            Const: 1
+        Compound Statement:
+          Var Declaration: type = int, name = t
+          Assign: 
+            Id: k
+            Call: minloc
+              Id: a
+              Id: i
+              Id: high
+          Assign: 
+            Id: t
+            Array Id: a
+              Id: k
+          Assign: 
+            Array Id: a
+              Id: k
+            Array Id: a
+              Id: i
+          Assign: 
+            Array Id: a
+              Id: i
+            Id: t
+          Assign: 
+            Id: i
+            Op: +
+              Id: i
+              Const: 1
+  Function Declaration: type = void, name = main
+    Param Declaration: type = void, name = (null)
+    Compound Statement:
+      Var Declaration: type = int, name = i
+      Assign: 
+        Id: i
+        Const: 0
+      While
+        Op: <
+          Id: i
+          Const: 10
+        Compound Statement:
+          Assign: 
+            Array Id: x
+              Id: i
+            Call: input
+          Assign: 
+            Id: i
+            Op: +
+              Id: i
+              Const: 1
+      Call: sort
+        Id: x
+        Const: 0
+        Const: 10
+      Assign: 
+        Id: i
+        Const: 0
+      While
+        Op: <
+          Id: i
+          Const: 10
+        Compound Statement:
+          Call: output
+            Array Id: x
+              Id: i
+          Assign: 
+            Id: i
+            Op: +
+              Id: i
+              Const: 1
+
+Building Symbol Table...
+
+Symbol table:
+
+<global scope> (nested level: 0)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+main           Function  sort           Function  input          Function  minloc         Function  output         Function  x              Variable  
+function name: minloc (nested level: 1)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+low            Parameter   a              Parameter   i              Variable  k              Variable  x              Variable  high           Parameter   
+function name: minloc (nested level: 2)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+
+function name: minloc (nested level: 3)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+
+function name: sort (nested level: 1)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+low            Parameter   a              Parameter   i              Variable  k              Variable  high           Parameter   
+function name: sort (nested level: 2)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+t              Variable  
+function name: main (nested level: 1)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+i              Variable  
+function name: main (nested level: 2)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+
+function name: main (nested level: 2)
+Symbol Name    Sym.Type  Data Type    Line Numbers
+-------------  --------  -----------  ------------
+
+
+Checking Types...
+
+Type Checking Finished
