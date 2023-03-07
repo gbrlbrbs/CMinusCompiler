@@ -103,7 +103,7 @@ static void insertNode( TreeNode * t) {
             Scope scope = sc_create(funName);
             sc_push(scope);
           }
-          t->attr.scope = sc_top();
+          t->scope = sc_top();
         default:
           break;
       }
@@ -218,7 +218,7 @@ static void beforeCheckNode(TreeNode * t)
     case Stmnt:
       switch (t->kind.stmnt)
       { case Compound:
-          sc_push(t->attr.scope);
+          sc_push(t->scope);
           break;
         default:
           break;
@@ -302,7 +302,7 @@ static void checkNode(TreeNode * t)
             /* any problem */
             break;
           }
-          if (arg == NULL && param != NULL) typeError(t->child[0], "the number of arguments is wrong");
+          if (arg == NULL && param != NULL && param->type != Void) typeError(t->child[0], "the number of arguments is wrong");
           t->type = funDecl->type;
           break;
         default:

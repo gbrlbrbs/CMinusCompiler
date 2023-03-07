@@ -62,8 +62,11 @@ typedef struct TreeNode {
         TokenType op;
         int val;
         char *name;
-        struct ScopeRec* scope;
     } attr;
+    struct ScopeRec* scope;
+    int tempOpNum;
+    int firstLabelNum;
+    int secondLabelNum;
     ExpType type;
 } TreeNode;
 

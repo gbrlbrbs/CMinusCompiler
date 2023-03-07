@@ -45,15 +45,23 @@ Symbol table:
 <global scope> (nested level: 0)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-gdc            Function  main           Function  input          Function  output         Function  
+gdc            Function  Integer         2    5   14 
+main           Function  Void            8 
+input          Function  Integer        -1   12   13 
+output         Function  Void           -1   14 
+
 function name: gdc (nested level: 1)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-u              Parameter   v              Parameter   
+u              Parameter   Integer         2    4    5    5 
+v              Parameter   Integer         2    4    5    5    5 
+
 function name: main (nested level: 1)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-x              Variable  y              Variable  
+x              Variable  Integer        10   12   14 
+y              Variable  Integer        11   13   14 
+
 
 Checking Types...
 

@@ -84,10 +84,10 @@ int main( int argc, char * argv[] )
     int fnlen = strcspn(pgm,".");
     codefile = (char *) calloc(fnlen+4, sizeof(char));
     strncpy(codefile,pgm,fnlen);
-    strcat(codefile,".tm");
+    strcat(codefile,".tac");
     code = fopen(codefile,"w");
-    if (code == NULL)
-    { printf("Unable to open %s\n",codefile);
+    if (code == NULL){ 
+      printf("Unable to open %s\n",codefile);
       exit(1);
     }
     codeGen(syntaxTree,codefile);

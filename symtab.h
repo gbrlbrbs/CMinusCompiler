@@ -45,7 +45,7 @@ typedef struct ScopeRec
      struct ScopeRec * parent;
      BucketList hashTable[SIZE]; /* the hash table */
    } * Scope;
-
+   
 extern Scope globalScope;
 
 /* Procedure st_insert inserts line numbers and
