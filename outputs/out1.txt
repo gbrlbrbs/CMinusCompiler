@@ -142,11 +142,23 @@ Symbol table:
 <global scope> (nested level: 0)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-main           Function  sort           Function  input          Function  minloc         Function  output         Function  x              Variable  
+main           Function  Void           39 
+sort           Function  Void           23   48 
+input          Function  Integer        -1   45 
+minloc         Function  Integer         3   31 
+output         Function  Void           -1   52 
+x              Variable  Integer         2   45   48   52 
+
 function name: minloc (nested level: 1)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-low            Parameter   a              Parameter   i              Variable  k              Variable  x              Variable  high           Parameter   
+low            Parameter   Integer         3    8    9   10 
+a              Parameter   Integer         3    9   13   15 
+i              Variable  Integer         5   10   11   13   15   16   18   18 
+k              Variable  Integer         7    8   16   20 
+x              Variable  Integer         6    9   13   15 
+high           Parameter   Integer         3   11 
+
 function name: minloc (nested level: 2)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
@@ -158,15 +170,22 @@ Symbol Name    Sym.Type  Data Type    Line Numbers
 function name: sort (nested level: 1)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-low            Parameter   a              Parameter   i              Variable  k              Variable  high           Parameter   
+low            Parameter   Integer        23   27 
+a              Parameter   Integer        23   31   32   33   33   34 
+i              Variable  Integer        25   27   28   31   33   34   35   35 
+k              Variable  Integer        26   31   32   33 
+high           Parameter   Integer        23   28   31 
+
 function name: sort (nested level: 2)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-t              Variable  
+t              Variable  Integer        30   32   34 
+
 function name: main (nested level: 1)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------
-i              Variable  
+i              Variable  Integer        41   42   43   45   46   46   49   50   52   53   53 
+
 function name: main (nested level: 2)
 Symbol Name    Sym.Type  Data Type    Line Numbers
 -------------  --------  -----------  ------------

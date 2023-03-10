@@ -44,6 +44,27 @@ int isConstOrId(TreeNode *node) {
   return (node->kind.exp == Id || node->kind.exp == Const);
 }
 
+void emitArrId(TreeNode *node) {
+  TreeNode *c0 = node->child[0];
+  node->tempOpNum = tempVarNum++;
+  switch (c0->kind.exp) {
+    case Op:
+      emitOp(c0);
+      fprintf(code, "_t%d = _t%d * 4\n", node->tempOpNum, c0->tempOpNum);
+      break;
+    case Const:
+    case Id:
+      fprintf(code, "_t%d = ", node->tempOpNum);
+      emitConstOrId(c0);
+      fprintf(code, "* 4\n");
+    default:
+      break;
+  }
+  int oldNum = node->tempOpNum;
+  node->tempOpNum = tempVarNum++;
+  fprintf(code, "_t%d = %s[_t%d]", node->tempOpNum, node->attr.name, oldNum);
+}
+
 void emitFunDecl(char* name) {
   fprintf(code, "%s:\n", name);
 }
@@ -121,6 +142,10 @@ void emitAssign(TreeNode* node) {
       emitCall(rhs);
       fprintf(code, "%s = _t%d\n", lhs->attr.name, rhs->tempOpNum);
     }
+    if (rhs->kind.exp == ArrId) {
+      emitArrId(rhs);
+      fprintf(code, "%s = _t%d\n", lhs->attr.name, rhs->tempOpNum);
+    }
   }
 }
 
@@ -176,6 +201,52 @@ void emitOp(TreeNode* node) {
   if (lhs->kind.exp == Call && rhs->kind.exp == Call) {
     emitCall(lhs);
     emitCall(rhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
+  }
+  if (lhs->kind.exp == ArrId && rhs->kind.exp == Op) {
+    emitArrId(lhs);
+    emitOp(rhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
+  }
+  if (lhs->kind.exp == ArrId && isConstOrId(rhs)) {
+    emitArrId(lhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
+    printOp(node->attr.op);
+    emitConstOrId(rhs);
+  }
+  if (lhs->kind.exp == ArrId && rhs->kind.exp == Call) {
+    emitArrId(lhs);
+    emitCall(rhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
+  }
+  if (isConstOrId(lhs) && rhs->kind.exp == ArrId) {
+    emitArrId(rhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, rhs->tempOpNum);
+    emitConstOrId(lhs);
+  }
+  if (lhs->kind.exp == Op && rhs->kind.exp == ArrId) {
+    emitOp(lhs);
+    emitArrId(rhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
+  }
+  if (lhs->kind.exp == Call && rhs->kind.exp == ArrId) {
+    emitCall(lhs);
+    emitArrId(rhs);
+    fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
+  }
+  if (lhs->kind.exp == ArrId && rhs->kind.exp == ArrId) {
+    emitArrId(lhs);
+    emitArrId(rhs);
     fprintf(code, "_t%d = _t%d ", node->tempOpNum, lhs->tempOpNum);
     printOp(node->attr.op);
     fprintf(code, "_t%d", rhs->tempOpNum);

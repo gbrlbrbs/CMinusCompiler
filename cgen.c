@@ -56,12 +56,12 @@ void genStmnt(TreeNode *tree) {
             fprintf(code, "if_true _t%d goto L%d\n", c0->tempOpNum, tree->firstLabelNum);
             if (c2 != NULL) { /* has else */
                 cGen(c2);
-                fprintf(code, "goto L%d\n", tree->secondLabelNum);
+                if (tree->sibling != NULL) fprintf(code, "goto L%d\n", tree->secondLabelNum);
             }
             fprintf(code, "L%d:\n", tree->firstLabelNum);
             cGen(c1);
-            fprintf(code, "L%d:\n", tree->secondLabelNum);
             if (tree->sibling != NULL) {
+                fprintf(code, "L%d:\n", tree->secondLabelNum);
                 cGen(tree->sibling);
             }
             break;
@@ -125,6 +125,9 @@ void genExp(TreeNode* tree) {
         case Const:
             emitConstOrId(tree);
             break;
+        case ArrId:
+            emitArrId(tree);
+            break;
         default:
             break;
     }
@@ -134,9 +137,13 @@ void genDecl(TreeNode* tree) {
     switch (tree->kind.decl) {
         case Fun:
             emitFunDecl(tree->attr.name);
-            TreeNode* c0 = tree->child[0];
             TreeNode* c1 = tree->child[1];
             cGen(c1);
+            if (tree->sibling != NULL) {
+                cGen(tree->sibling);
+            }
+            break;
+        case Var:
             if (tree->sibling != NULL) {
                 cGen(tree->sibling);
             }

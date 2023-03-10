@@ -17,5 +17,6 @@ void emitAssign(TreeNode* node);
 void emitCall(TreeNode *node);
 int getParams(TreeNode* node);
 void emitConstOrId(TreeNode *node);
+void emitArrId(TreeNode *node);
 
 #endif
