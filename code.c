@@ -168,9 +168,10 @@ void emitOp(TreeNode* node) {
   }
   if (isConstOrId(lhs) && rhs->kind.exp == Op) {
     emitOp(rhs);
-    fprintf(code, "_t%d = _t%d ", node->tempOpNum, rhs->tempOpNum);
-    printOp(node->attr.op);
+    fprintf(code, "_t%d = ", node->tempOpNum);
     emitConstOrId(lhs);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
   }
   if (lhs->kind.exp == Call && isConstOrId(rhs)) {
     emitCall(lhs);
@@ -187,9 +188,10 @@ void emitOp(TreeNode* node) {
   }
   if (isConstOrId(lhs) && rhs->kind.exp == Call) {
     emitCall(rhs);
-    fprintf(code, "_t%d = _t%d ", node->tempOpNum, rhs->tempOpNum);
-    printOp(node->attr.op);
+    fprintf(code, "_t%d = ", node->tempOpNum);
     emitConstOrId(lhs);
+    printOp(node->attr.op);
+    fprintf(code, "_t%d", rhs->tempOpNum);
   }
   if (lhs->kind.exp == Op && rhs->kind.exp == Call) {
     emitOp(lhs);
@@ -227,8 +229,9 @@ void emitOp(TreeNode* node) {
   }
   if (isConstOrId(lhs) && rhs->kind.exp == ArrId) {
     emitArrId(rhs);
-    fprintf(code, "_t%d = _t%d ", node->tempOpNum, rhs->tempOpNum);
+    fprintf(code, "_t%d = ", node->tempOpNum, rhs->tempOpNum);
     emitConstOrId(lhs);
+    fprintf(code, "_t%d", rhs->tempOpNum);
   }
   if (lhs->kind.exp == Op && rhs->kind.exp == ArrId) {
     emitOp(lhs);
