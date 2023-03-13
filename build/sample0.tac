@@ -4,7 +4,7 @@ if_true _t0 goto L0
 param v
 _t4 = u / v 
 _t3 = _t4 * v 
-_t2 = _t3 - u 
+_t2 = u - _t3
 param _t2
 _t1 = call gdc, 2
 return _t1

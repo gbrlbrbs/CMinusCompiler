@@ -24,7 +24,7 @@ sort:
 i = low
 L4:
 _t11 = high - 1 
-_t10 = _t11 < i 
+_t10 = i < _t11
 if_true !_t10 goto L5
 param a
 param i
